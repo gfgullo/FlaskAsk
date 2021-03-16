@@ -1,0 +1,74 @@
+{% extends "navbar.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Question{% endblock %}
+
+{% block page_content %}
+<div class="container">
+
+    <div>
+        <h3><b>{{question.title}}</b></h3>
+        <p><b>Asked by {{question.author.username}} {{moment(question.timestamp).fromNow()}}</b></p>
+        <p style="font-size:18px;">{{question.body}}</p>
+
+            {% if (current_user.is_authenticated and current_user.has_upvoted_question(question)) %}
+           <a href="{{url_for('.upvote', question_id=question.id, action='downvote')}}"><b>-</b> {{question.upvotes.count()}}</a>
+          {% else %}
+           <a href="{{url_for('.upvote', question_id=question.id, action='upvote')}}"><b>+</b> {{question.upvotes.count()}}</a>
+          {% endif %}
+
+            {% if (current_user.id == question.author.id or current_user.is_admin) %}
+                <a href="{{url_for('.delete_question', question_id=question.id)}}">DELETE</a>
+            {% endif %}
+    </div>
+
+    {% if current_user.is_authenticated %}
+        <div style="margin-top:40px; margin-bottom:40px;">
+        <form action="" method=post>
+           {{form.hidden_tag()}}
+           <dl>
+              <dt>Write an answer:
+              <dd>{{ form.body(cols="50", rows="5") }}
+           </dl>
+           <p>
+              <input type=submit value="Answer">
+        </form>
+        </div>
+    {% endif %}
+
+    <div style="margin-top:40px;">
+
+{% if correct_answer != None %}
+<div>
+    <h2><b>Correct Answer</b></h2>
+    <p><b>{{correct_answer.author.username}} {{moment(correct_answer.timestamp).fromNow()}}</b></p>
+    <p style="font-size:18px;"><b>{{correct_answer.body}}</b></p>
+</div>
+    {% endif %}
+
+    <h3>Answers</h3>
+
+     <ul style="padding: 0;">
+        {% for answer in answers %}
+           <li style="list-style-type: none; border-bottom: 1px solid #ddd; padding-top:10px; padding-bottom:10px">
+               <p><b>{{answer.author.username}} {{moment(answer.timestamp).fromNow()}}</b></p>
+              <p style="font-size:18px;">{{answer.body}}</p>
+               {% if current_user.id == question.author.id %}
+                    <a href="{{url_for('.correct', question_id=question.id, answer_id=answer.id)}}">CORRECT</a>
+                {% endif %}
+               {% if (current_user.id == answer.author.id or current_user.is_admin) %}
+                <a href="{{url_for('.delete_answer', answer_id=answer.id)}}">DELETE</a>
+            {% endif %}
+
+           </li>
+        {% endfor %}
+     </ul>
+        </div>
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, '.view_question', fragment='#answers', id=question.id) }}
+    </div>
+
+</div>
+
+{% endblock %}

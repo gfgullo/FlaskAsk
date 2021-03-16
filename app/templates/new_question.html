@@ -1,0 +1,18 @@
+{% extends "navbar.html" %}
+{% block title %}New Question{% endblock %}
+{% block page_content %}
+<div class="container">
+<H3>Post a new question</H3>
+<form action="" method=post>
+   {{form.hidden_tag()}}
+   <dl>
+      <dt>Title:
+      <dd style="width:500px">{{ form.title }}
+      <dt>Question:
+      <dd>{{ form.body(cols="80", rows="25") }}}
+   </dl>
+   <p>
+      <input type=submit value="Ask">
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+Hi, {{ user.username }},
+
+Welcome to FlaskAsk!
+
+Please confirm your account email, {{user.email}}, by clicking the link below:
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+Happy Learning!
+The FlaskAsk Team

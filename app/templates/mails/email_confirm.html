@@ -1,0 +1,6 @@
+<p>Hi, {{ user.username }},</p>
+<p>Welcome to <b>FlaskAsk</b>!</p>
+<p>Please confirm your account email, {{user.email}}, by clicking the link below:</p>
+<p><a href="{{ url_for('auth.confirm', token=token, _external=True) }}">Confirm My Account</a></p>
+<p>Happy Learning !</p>
+<p>The FlaskAsk Team</p>

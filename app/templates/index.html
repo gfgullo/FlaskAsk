@@ -1,0 +1,51 @@
+{% extends "navbar.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% block title %}FlaskAsk{% endblock %}
+{% block page_content %}
+
+        <div class="navbar-right">
+    {%  for order in ["date", "upvotes"] %}
+        {% if order_by == order %}
+            <a href="{{ url_for('main.index',order_by=order)}}"><b>{{ order|upper }}</b></a>
+        {% else %}
+            <a href="{{ url_for('main.index',order_by=order)}}">{{ order|upper }}</a>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+
+    <div class="container">
+
+        {% if current_user.is_authenticated %}
+             <a href="{{ url_for('main.new_question')}}">Ask a new question</a>
+        {% endif %}
+
+        <h1>Questions</h1>
+
+         <ul>
+            {% for question in questions %}
+               <li style="list-style-type: none; border-bottom: 1px solid #ddd;">
+                <h3><a href="{{ url_for('.view_question', id=question.id) }}">{{question.title}}</a></h3>
+                  <p>Asked by {{question.author.username}} {{moment(question.timestamp).fromNow()}}</p>
+
+                   {% if (current_user.is_authenticated and current_user.has_upvoted_question(question)) %}
+               <a href="{{url_for('.upvote', question_id=question.id, action='downvote')}}"><b>-</b> {{question.upvotes.count()}}</a>
+              {% else %}
+               <a href="{{url_for('.upvote', question_id=question.id, action='upvote')}}"><b>+</b> {{question.upvotes.count()}}</a>
+              {% endif %}
+
+               </li>
+            {% endfor %}
+         </ul>
+           </div>
+
+        <div class="pagination">
+        {{ macros.pagination_widget(pagination, '.index') }}
+    </div>
+
+    </div>
+
+
+
+{% endblock %}
