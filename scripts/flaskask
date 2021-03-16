@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name flaskask.xyz www.flaskask.xyz;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/flaskask/flaskask.sock;
+    }
+}
