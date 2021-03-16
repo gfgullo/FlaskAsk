@@ -1,0 +1,8 @@
+MAIL_PASSWORD='UFHShRgU3jCdrBT'
+MAIL_USERNAME='flaskask@alienconcept.co'
+MAIL_DEFAULT_SENDER='flaskask@alienconcept.co'
+MAIL_USE_SSL=1
+MAIL_USE_TLS=0
+MAIL_PORT=465
+MAIL_SERVER='server111.web-hosting.com'
+SECRET_KEY='A very complex and long secret key'
