@@ -7,7 +7,7 @@ User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/flaskask
 Environment="PATH=/home/ubuntu/flaskask/venv/bin"
-ExecStart=/home/ubuntu/flaskask/venv/bin/gunicorn --workers 3 --preload --bind unix:flaskask.sock -m 007 wsgi:app
+ExecStart=/home/ubuntu/flaskask/venv/bin/gunicorn --workers 3 --reload --bind unix:flaskask.sock -m 007 wsgi:app
 EnvironmentFile=/home/ubuntu/flaskask/environment
 
 [Install]
