@@ -1,9 +1,0 @@
-tensorflow
-pandas
-scikit-learn
-joblib
-gunicorn
-flask
-flask-bootstrap
-flask-wtf
-flask-dropzone
